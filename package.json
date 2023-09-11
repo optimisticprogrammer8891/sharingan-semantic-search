@@ -1,0 +1,16 @@
+{
+  "name": "nodeframework_sharingan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aditya Joshi",
+  "license": "ISC",
+  "dependencies": {
+    "@pinecone-database/pinecone": "^0.1.6",
+    "openai": "^3.3.0",
+    "pinecone-client": "^1.1.0"
+  }
+}
