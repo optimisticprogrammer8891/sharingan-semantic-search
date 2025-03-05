@@ -1,0 +1,53 @@
+service: sharingan-semantic-search
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  memorySize: 256
+  timeout: 30
+  environment:
+    OPENAI_API_KEY: ${env:OPENAI_API_KEY}
+    OPENAI_MODEL: ${env:OPENAI_MODEL, 'gpt-3.5-turbo'}
+    OPENAI_EMBEDDING_MODEL: ${env:OPENAI_EMBEDDING_MODEL, 'text-embedding-ada-002'}
+    PINECONE_API_KEY: ${env:PINECONE_API_KEY}
+    PINECONE_ENVIRONMENT: ${env:PINECONE_ENVIRONMENT, 'us-west4-gcp-free'}
+    PINECONE_INDEX_NAME: ${env:PINECONE_INDEX_NAME, 'mera-master-db'}
+    TOP_K: ${env:TOP_K, '5'}
+    DEBUG: ${env:DEBUG, 'false'}
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource: arn:aws:logs:*:*:*
+
+functions:
+  semanticSearch:
+    handler: index.handler
+    events:
+      - http:
+          path: api/semantic-search
+          method: post
+          cors: true
+
+package:
+  exclude:
+    - node_modules/**
+    - .env
+    - .env.example
+    - local.js
+    - README.md
+    - .gitignore
+    - .git/**
+    - test/**
+    - coverage/**
+    - .vscode/**
+    - .idea/**
