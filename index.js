@@ -1,8 +1,8 @@
 const { Configuration, OpenAIApi } = require("openai");
 const { PineconeClient } = require('@pinecone-database/pinecone');
 
-const openai_api_key = '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'; // Use environment variable
-const pinecone_api_key = '6195225e-f7dc-4fc8-922e-b4fc29889594'; // Use environment variable
+const openai_api_key = 'YOUR_OPENAI_KEY'; // Use environment variable
+const pinecone_api_key = 'YOUR_PINECONE_API_KEY'; // Use environment variable
 
 const configuration = new Configuration({
     apiKey: openai_api_key,
@@ -19,7 +19,7 @@ const query_pinecone = async (embeddings, courseID) => {
             topK: 5,
             includeMetadata: true,
             vector: embeddings,
-            filter:{"course": "CS-EET-2022S-P1-BusinessCommunication"}
+            filter:{"course": "COURSE_NAME"}
         },
     });
     console.log("inside query_pinecone, result:", result);
